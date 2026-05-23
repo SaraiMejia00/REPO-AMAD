@@ -1,0 +1,30 @@
+# .github/workflows/ci.yml 
+name: Integracion Continua CargaSmart 
+# 1. ¿Cuándo se ejecutará esto? (Eventos) 
+on: 
+push: 
+branches: [ "main" ] 
+pull_request: 
+    branches: [ "main" ] 
+ 
+# 2. ¿Qué trabajos (jobs) va a realizar el servidor? 
+jobs: 
+  build-and-test: 
+    # 3. ¿En qué sistema operativo correrá el servidor prestado? 
+    runs-on: ubuntu-latest 
+ 
+    # 4. Los pasos secuenciales de la cinta transportadora 
+    steps: 
+    - name: Clonar el repositorio de GitHub al servidor virtual 
+      uses: actions/checkout@v3 
+ 
+    - name: Instalar Node.js en el servidor 
+      uses: actions/setup-node@v3 
+      with: 
+        node-version: '18.x' 
+ 
+    - name: Instalar dependencias del proyecto (npm install) 
+      run: npm ci 
+ 
+    - name: Correr las pruebas automatizadas (npm test) 
+      run: npm test
